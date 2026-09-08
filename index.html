@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BLOODWIRE — Soundtrack</title>
+<meta name="description" content="BLOODWIRE — a small soundtrack of songs worth playing loud. Bohemian Rhapsody, Still Loving You, Wolf River.">
+<meta property="og:title" content="BLOODWIRE — Soundtrack">
+<meta property="og:description" content="A small soundtrack of songs worth playing loud.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="bg.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%230a0708'/%3E%3Cpath d='M50 18 L58 40 L80 40 L62 54 L70 76 L50 62 L30 76 L38 54 L20 40 L42 40 Z' fill='none' stroke='%23ff2a55' stroke-width='4' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700&family=New+Rocker&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --void:#0a0708;
+    --void-soft:#120d0f;
+    --blood-deep:#5c0000;
+    --blood:#a30000;
+    --blood-bright:#ff2a55;
+    --ash:#e3dcd8;
+    --ash-dim:#9a908c;
+    --line:rgba(255,255,255,0.08);
+    --bar-h:92px;
+  }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; }
+  }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    min-height:100vh;
+    width:100vw;
+    background:var(--void) url('bg.jpg') no-repeat center center / cover fixed;
+    font-family:'Cinzel', serif;
+    color:var(--ash);
+    overflow-x:hidden;
+    padding-bottom:calc(var(--bar-h) + 24px);
+  }
+
+  /* film-grain + vignette atmosphere, one deliberate texture layer */
+  body::before{
+    content:'';
+    position:fixed; inset:0;
+    background:
+      radial-gradient(ellipse at center, transparent 0%, rgba(6,4,5,0.55) 65%, rgba(4,3,3,0.92) 100%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.05'/%3E%3C/svg%3E");
+    pointer-events:none;
+    z-index:0;
+  }
+
+  a{ color:inherit; }
+
+  /* ---------- header ---------- */
+  header{
+    text-align:center;
+    padding:56px 20px 28px;
+    position:relative;
+    z-index:1;
+  }
+
+  .brand-title{
+    font-family:'New Rocker', cursive;
+    font-size:clamp(2.6rem, 9vw, 4.4rem);
+    letter-spacing:4px;
+    color:var(--blood);
+    animation:ignite 2.4s ease-out 1;
+  }
+
+  @keyframes ignite{
+    0%{ opacity:0; text-shadow:none; }
+    18%{ opacity:1; text-shadow:0 0 2px rgba(255,42,85,0.9); }
+    26%{ opacity:0.3; text-shadow:none; }
+    34%{ opacity:1; text-shadow:0 0 24px rgba(255,42,85,0.9); }
+    40%{ opacity:0.5; }
+    48%{ opacity:1; text-shadow:0 0 12px rgba(163,0,0,0.9), 0 0 34px rgba(255,42,85,0.5), 3px 3px 8px rgba(0,0,0,0.95); }
+    100%{ opacity:1; }
+  }
+
+  .subtitle{
+    font-size:0.8rem;
+    letter-spacing:7px;
+    color:var(--ash-dim);
+    text-transform:uppercase;
+    margin-top:6px;
+  }
+
+  /* ---------- shell / layout ---------- */
+  .shell{
+    position:relative;
+    z-index:1;
+    max-width:900px;
+    margin:0 auto;
+    padding:0 20px;
+    display:grid;
+    grid-template-columns:1fr;
+    gap:34px;
+  }
+
+  @media (min-width:760px){
+    .shell{
+      grid-template-columns:300px 1fr;
+      align-items:start;
+    }
+    .stage{ position:sticky; top:40px; }
+  }
+
+  /* ---------- visualizer stage ---------- */
+  .stage{
+    background:rgba(12,9,11,0.75);
+    border:1px solid rgba(139,0,0,0.35);
+    border-radius:14px;
+    padding:22px;
+    box-shadow:0 0 30px rgba(0,0,0,0.85), inset 0 0 18px rgba(255,42,85,0.05);
+  }
+
+  canvas#viz{
+    width:100%;
+    height:160px;
+    display:block;
+    border-radius:8px;
+  }
+
+  .tagline{
+    max-width:520px;
+    margin:14px auto 0;
+    font-size:0.85rem;
+    color:var(--ash-dim);
+    line-height:1.7;
+  }
+
+  .now-playing{
+    margin-top:16px;
+    text-align:center;
+  }
+
+  .now-playing .np-label{
+    font-size:0.68rem;
+    letter-spacing:3px;
+    color:var(--ash-dim);
+    text-transform:uppercase;
+  }
+
+  .now-playing .np-title{
+    font-size:1.05rem;
+    color:var(--ash);
+    margin-top:4px;
+    min-height:1.4em;
+  }
+
+  /* ---------- tracklist ---------- */
+  .panel{
+    background:rgba(12,10,11,0.72);
+    backdrop-filter:blur(14px);
+    -webkit-backdrop-filter:blur(14px);
+    border:1px solid rgba(139,0,0,0.35);
+    border-radius:16px;
+    padding:26px 22px;
+    box-shadow:0 0 30px rgba(0,0,0,0.85), inset 0 0 15px rgba(255,42,85,0.04);
+  }
+
+  .panel-heading{
+    font-family:'UnifrakturMaguntia', cursive;
+    font-size:1.7rem;
+    color:var(--blood-bright);
+    margin-bottom:6px;
+  }
+
+  .panel-sub{
+    font-size:0.68rem;
+    letter-spacing:2px;
+    color:var(--ash-dim);
+    text-transform:uppercase;
+    padding-bottom:14px;
+    margin-bottom:14px;
+    border-bottom:1px solid rgba(139,0,0,0.5);
+  }
+
+  ul.tracks{
+    list-style:none;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .track{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    padding:12px 14px;
+    background:rgba(255,255,255,0.03);
+    border:1px solid rgba(255,255,255,0.07);
+    border-radius:10px;
+    cursor:pointer;
+    transition:background 0.25s ease, border-color 0.25s ease, transform 0.2s ease;
+  }
+
+  .track:hover{
+    background:rgba(139,0,0,0.28);
+    border-color:rgba(255,42,85,0.55);
+    transform:translateY(-1px);
+  }
+
+  .track.active{
+    background:rgba(139,0,0,0.42);
+    border-color:var(--blood-bright);
+  }
+
+  .track:focus-visible{
+    outline:2px solid var(--blood-bright);
+    outline-offset:2px;
+  }
+
+  .track .num{
+    font-size:0.9rem;
+    color:var(--ash-dim);
+    width:1.6em;
+    flex-shrink:0;
+  }
+
+  .track.active .num{ color:var(--blood-bright); }
+
+  .track .meta{ flex:1; min-width:0; }
+
+  .track .t-title{
+    font-size:0.95rem;
+    letter-spacing:0.5px;
+    color:var(--ash);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+  }
+
+  .track .t-duration{
+    font-size:0.72rem;
+    color:var(--ash-dim);
+    margin-top:2px;
+  }
+
+  .eq{
+    display:flex;
+    align-items:flex-end;
+    gap:2px;
+    height:16px;
+    width:16px;
+    flex-shrink:0;
+    opacity:0;
+    transition:opacity 0.2s ease;
+  }
+
+  .track.active .eq{ opacity:1; }
+
+  .eq span{
+    width:3px;
+    background:var(--blood-bright);
+    border-radius:1px;
+    animation:eqbar 0.9s ease-in-out infinite;
+  }
+  .eq span:nth-child(1){ animation-delay:0s; }
+  .eq span:nth-child(2){ animation-delay:0.2s; }
+  .eq span:nth-child(3){ animation-delay:0.4s; }
+
+  @keyframes eqbar{
+    0%,100%{ height:4px; }
+    50%{ height:16px; }
+  }
+
+  .track.active.paused .eq span{ animation-play-state:paused; height:5px; }
+
+  /* ---------- transport bar ---------- */
+  .transport{
+    position:fixed;
+    left:0; right:0; bottom:0;
+    z-index:5;
+    background:rgba(9,7,8,0.92);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border-top:1px solid rgba(139,0,0,0.45);
+    box-shadow:0 -6px 30px rgba(0,0,0,0.7);
+  }
+
+  .transport-inner{
+    max-width:900px;
+    margin:0 auto;
+    padding:10px 20px 14px;
+  }
+
+  input[type="range"]{
+    -webkit-appearance:none;
+    appearance:none;
+    width:100%;
+    height:4px;
+    border-radius:2px;
+    background:rgba(255,255,255,0.12);
+    outline:none;
+    cursor:pointer;
+  }
+
+  input[type="range"]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:13px; height:13px;
+    border-radius:50%;
+    background:var(--blood-bright);
+    box-shadow:0 0 8px rgba(255,42,85,0.85);
+    margin-top:-4.5px;
+  }
+  input[type="range"]::-moz-range-thumb{
+    width:13px; height:13px; border:none; border-radius:50%;
+    background:var(--blood-bright);
+    box-shadow:0 0 8px rgba(255,42,85,0.85);
+  }
+  input[type="range"]::-webkit-slider-runnable-track{ height:4px; border-radius:2px; }
+  input[type="range"]:focus-visible{ outline:2px solid var(--blood-bright); outline-offset:3px; }
+
+  #seek-row{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:10px;
+  }
+
+  .time{
+    font-size:0.68rem;
+    color:var(--ash-dim);
+    width:3.4em;
+    flex-shrink:0;
+  }
+  .time.end{ text-align:left; }
+
+  .controls-row{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:22px;
+  }
+
+  .ctrl-btn{
+    background:none;
+    border:none;
+    color:var(--ash);
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:6px;
+    border-radius:50%;
+    transition:color 0.2s ease, transform 0.15s ease;
+  }
+  .ctrl-btn:hover{ color:var(--blood-bright); }
+  .ctrl-btn:active{ transform:scale(0.92); }
+  .ctrl-btn:focus-visible{ outline:2px solid var(--blood-bright); outline-offset:3px; }
+
+  #play-btn{
+    width:46px; height:46px;
+    border:1px solid rgba(255,42,85,0.5);
+    background:rgba(255,42,85,0.12);
+    box-shadow:0 0 14px rgba(255,42,85,0.25);
+  }
+  #play-btn:hover{ background:rgba(255,42,85,0.9); color:#0a0708; }
+
+  .volume-wrap{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    position:absolute;
+    left:20px;
+    bottom:16px;
+  }
+  .volume-wrap input[type="range"]{ width:80px; }
+
+  @media (max-width:600px){
+    .volume-wrap{ display:none; }
+  }
+
+  footer{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    font-size:0.72rem;
+    letter-spacing:2px;
+    color:rgba(255,255,255,0.28);
+    text-transform:uppercase;
+    padding:30px 20px 10px;
+  }
+
+  .sr-only{
+    position:absolute; width:1px; height:1px;
+    overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap;
+  }
+
+  canvas#drips{
+    position:fixed;
+    inset:0;
+    width:100vw;
+    height:100vh;
+    z-index:0;
+    pointer-events:none;
+  }
+</style>
+</head>
+<body>
+
+  <canvas id="drips" aria-hidden="true"></canvas></canvas>
+
+  <header>
+    <h1 class="brand-title">BLOODWIRE</h1>
+    <p class="subtitle">Soundtrack</p>
+    <p class="tagline" id="tagline">A handful of songs I never get tired of playing loud.</p>
+  </header>
+
+  <main class="shell">
+
+    <section class="stage">
+      <canvas id="viz" width="600" height="160" aria-hidden="true"></canvas>
+      <div class="now-playing">
+        <div class="np-label">Now Playing</div>
+        <div class="np-title" id="np-title">Select a track</div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="panel-heading">Tracklist</h2>
+      <p class="panel-sub">Songs worth bleeding for</p>
+      <ul class="tracks" id="track-list"></ul>
+    </section>
+
+  </main>
+
+  <footer>&copy; Bloodwire</footer>
+
+  <div class="transport">
+    <div class="transport-inner">
+      <div id="seek-row">
+        <span class="time" id="time-current">0:00</span>
+        <input type="range" id="seek" min="0" max="100" value="0" aria-label="Seek">
+        <span class="time end" id="time-duration">0:00</span>
+      </div>
+      <div class="controls-row">
+        <button class="ctrl-btn" id="prev-btn" aria-label="Previous track">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zM20 6L10 12l10 6z"/></svg>
+        </button>
+        <button class="ctrl-btn" id="play-btn" aria-label="Play">
+          <svg id="play-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        </button>
+        <button class="ctrl-btn" id="next-btn" aria-label="Next track">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M16 6h2v12h-2zM4 6l10 6-10 6z"/></svg>
+        </button>
+      </div>
+      <div class="volume-wrap">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="color:var(--ash-dim)"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12z"/></svg>
+        <input type="range" id="volume" min="0" max="1" step="0.01" value="0.8" aria-label="Volume">
+      </div>
+    </div>
+  </div>
+
+  <audio id="audio" preload="metadata"></audio>
+
+<script>
+  // Edit this list to add, remove, or reorder tracks — the site rebuilds itself from it.
+  const tracks = [
+    { title: "Bohemian Rhapsody", artist: "Queen", file: "song1.mp3" },
+    { title: "Still Loving You", artist: "Scorpions", file: "song2.mp3" },
+    { title: "Wolf River", artist: "Reignwolf", file: "song3.mp3" }
+  ];
+
+  const audio = document.getElementById('audio');
+  const listEl = document.getElementById('track-list');
+  const npTitle = document.getElementById('np-title');
+  const playBtn = document.getElementById('play-btn');
+  const playIcon = document.getElementById('play-icon');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const seek = document.getElementById('seek');
+  const volume = document.getElementById('volume');
+  const timeCurrent = document.getElementById('time-current');
+  const timeDuration = document.getElementById('time-duration');
+
+  const ICON_PLAY = '<path d="M8 5v14l11-7z"/>';
+  const ICON_PAUSE = '<path d="M6 5h4v14H6zM14 5h4v14h-4z"/>';
+
+  let currentIndex = -1;
+  let isPlaying = false;
+
+  function formatTime(sec){
+    if (!isFinite(sec) || sec < 0) return '0:00';
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+  }
+
+  function buildList(){
+    listEl.innerHTML = '';
+    tracks.forEach((t, i) => {
+      const li = document.createElement('li');
+      li.className = 'track';
+      li.tabIndex = 0;
+      li.dataset.index = i;
+      li.setAttribute('role', 'button');
+      li.setAttribute('aria-label', `Play ${t.title} by ${t.artist}`);
+      li.innerHTML = `
+        <span class="num">${String(i + 1).padStart(2, '0')}</span>
+        <span class="meta">
+          <span class="sr-only">${t.title} by ${t.artist}</span>
+          <div class="t-duration"><span id="dur-${i}">--:--</span></div>
+        </span>
+        <span class="eq" aria-hidden="true"><span></span><span></span><span></span></span>
+      `;
+      li.addEventListener('click', () => selectTrack(i));
+      li.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); selectTrack(i); }
+      });
+      listEl.appendChild(li);
+
+      // Probe duration without playing
+      const probe = new Audio();
+      probe.preload = 'metadata';
+      probe.src = t.file;
+      probe.addEventListener('loadedmetadata', () => {
+        const el = document.getElementById(`dur-${i}`);
+        if (el) el.textContent = formatTime(probe.duration);
+      });
+      probe.addEventListener('error', () => {
+        const el = document.getElementById(`dur-${i}`);
+        if (el) el.textContent = '--:--';
+      });
+    });
+  }
+
+  function setActiveRow(){
+    document.querySelectorAll('.track').forEach((row, i) => {
+      row.classList.toggle('active', i === currentIndex);
+      row.classList.toggle('paused', i === currentIndex && !isPlaying);
+    });
+  }
+
+  function selectTrack(i){
+    if (currentIndex === i){
+      togglePlay();
+      return;
+    }
+    currentIndex = i;
+    audio.src = tracks[i].file;
+    npTitle.textContent = `${tracks[i].title} — ${tracks[i].artist}`;
+    audio.play().then(() => { isPlaying = true; updatePlayIcon(); setActiveRow(); ensureAudioGraph(); })
+      .catch(() => { isPlaying = false; updatePlayIcon(); setActiveRow(); });
+  }
+
+  function togglePlay(){
+    if (currentIndex === -1){
+      if (tracks.length) selectTrack(0);
+      return;
+    }
+    if (audio.paused){
+      audio.play().then(() => { isPlaying = true; updatePlayIcon(); setActiveRow(); ensureAudioGraph(); });
+    } else {
+      audio.pause();
+      isPlaying = false;
+      updatePlayIcon();
+      setActiveRow();
+    }
+  }
+
+  function updatePlayIcon(){
+    playIcon.outerHTML = `<svg id="play-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">${isPlaying ? ICON_PAUSE : ICON_PLAY}</svg>`;
+  }
+
+  function playNext(){
+    if (!tracks.length) return;
+    const next = (currentIndex + 1) % tracks.length;
+    selectTrack(next);
+  }
+
+  function playPrev(){
+    if (!tracks.length) return;
+    const prev = (currentIndex - 1 + tracks.length) % tracks.length;
+    selectTrack(prev);
+  }
+
+  playBtn.addEventListener('click', togglePlay);
+  nextBtn.addEventListener('click', playNext);
+  prevBtn.addEventListener('click', playPrev);
+
+  audio.addEventListener('timeupdate', () => {
+    if (!audio.duration) return;
+    seek.value = (audio.currentTime / audio.duration) * 100;
+    timeCurrent.textContent = formatTime(audio.currentTime);
+  });
+
+  audio.addEventListener('loadedmetadata', () => {
+    timeDuration.textContent = formatTime(audio.duration);
+  });
+
+  audio.addEventListener('ended', playNext);
+
+  seek.addEventListener('input', () => {
+    if (audio.duration){
+      audio.currentTime = (seek.value / 100) * audio.duration;
+    }
+  });
+
+  const savedVolume = localStorage.getItem('bloodwire-volume');
+  if (savedVolume !== null){
+    audio.volume = parseFloat(savedVolume);
+    volume.value = savedVolume;
+  } else {
+    audio.volume = 0.8;
+  }
+
+  volume.addEventListener('input', () => {
+    audio.volume = parseFloat(volume.value);
+    localStorage.setItem('bloodwire-volume', volume.value);
+  });
+
+  // ---------- live frequency visualizer ----------
+  const canvas = document.getElementById('viz');
+  const ctx = canvas.getContext('2d');
+  let audioCtx, analyser, source, dataArray;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function ensureAudioGraph(){
+    if (audioCtx) { if (audioCtx.state === 'suspended') audioCtx.resume(); return; }
+    try {
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser();
+      analyser.fftSize = 64;
+      source = audioCtx.createMediaElementSource(audio);
+      source.connect(analyser);
+      analyser.connect(audioCtx.destination);
+      dataArray = new Uint8Array(analyser.frequencyBinCount);
+    } catch (e) {
+      analyser = null;
+    }
+  }
+
+  function resizeCanvas(){
+    const rect = canvas.getBoundingClientRect();
+    canvas.width = rect.width * devicePixelRatio;
+    canvas.height = rect.height * devicePixelRatio;
+  }
+  window.addEventListener('resize', resizeCanvas);
+
+  let t = 0;
+  const POINTS = 48;
+  const smoothed = new Array(POINTS).fill(0); // eased amplitude per point, kept between frames for gentle motion
+
+  function drawCurve(points){
+    // draws a smooth curve through points using quadratic curves via midpoints
+    ctx.beginPath();
+    ctx.moveTo(points[0].x, points[0].y);
+    for (let i = 1; i < points.length - 1; i++){
+      const midX = (points[i].x + points[i + 1].x) / 2;
+      const midY = (points[i].y + points[i + 1].y) / 2;
+      ctx.quadraticCurveTo(points[i].x, points[i].y, midX, midY);
+    }
+    const last = points[points.length - 1];
+    ctx.lineTo(last.x, last.y);
+    ctx.stroke();
+  }
+
+  function draw(){
+    requestAnimationFrame(draw);
+    if (!canvas.width) resizeCanvas();
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    const mid = h / 2;
+    const step = w / (POINTS - 1);
+
+    ctx.lineWidth = 2 * devicePixelRatio;
+    ctx.lineJoin = 'round';
+    ctx.lineCap = 'round';
+    ctx.shadowColor = 'rgba(255,42,85,0.65)';
+    ctx.shadowBlur = 8 * devicePixelRatio;
+    ctx.strokeStyle = isPlaying ? 'rgba(255,42,85,0.85)' : 'rgba(163,0,0,0.55)';
+
+    const points = [];
+
+    if (isPlaying && analyser){
+      analyser.getByteFrequencyData(dataArray);
+      // bucket the frequency bins down to POINTS samples
+      const binsPerPoint = dataArray.length / POINTS;
+      for (let i = 0; i < POINTS; i++){
+        const start = Math.floor(i * binsPerPoint);
+        const end = Math.max(start + 1, Math.floor((i + 1) * binsPerPoint));
+        let sum = 0;
+        for (let b = start; b < end; b++) sum += dataArray[b];
+        const target = (sum / (end - start)) / 255; // 0..1
+        // ease toward the target so the line glides instead of jumping
+        smoothed[i] += (target - smoothed[i]) * 0.18;
+        // mirror above/below the midline like a gentle waveform, softened at the edges
+        const edgeFade = Math.sin((i / (POINTS - 1)) * Math.PI);
+        const amp = smoothed[i] * h * 0.4 * edgeFade;
+        const wobble = Math.sin(t * 1.3 + i * 0.5) * amp * 0.5;
+        points.push({ x: i * step, y: mid - amp - wobble });
+      }
+    } else {
+      for (let i = 0; i < POINTS; i++){
+        smoothed[i] += (0 - smoothed[i]) * 0.1; // settle back to flat when paused
+        const y = mid + Math.sin((i * 0.35) + t) * (h * 0.06) * Math.sin(t * 0.5) + smoothed[i];
+        points.push({ x: i * step, y });
+      }
+    }
+
+    drawCurve(points);
+    ctx.shadowBlur = 0;
+    if (!reduceMotion) t += 0.04;
+  }
+  draw();
+
+  buildList();
+
+  // ---------- ambient blood splatter: impacts that appear, then run and fade ----------
+  (function drips(){
+    const c = document.getElementById('drips');
+    const dx = c.getContext('2d');
+    let W, H, slots;
+    const reduceMotionDrips = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const rand = (a, b) => Math.random() * (b - a) + a;
+
+    function resize(){
+      W = c.width = window.innerWidth * devicePixelRatio;
+      H = c.height = window.innerHeight * devicePixelRatio;
+    }
+
+    function makeSlots(){
+      const count = Math.min(6, Math.max(2, Math.floor((window.innerWidth * window.innerHeight) / 260000)));
+      slots = Array.from({ length: count }, () => ({ active: false, nextSpawn: rand(0, 4000) }));
+    }
+
+    function spawn(slot, now){
+      const r = rand(3, 6) * devicePixelRatio;
+      const satelliteCount = Math.floor(rand(5, 11));
+      const satellites = Array.from({ length: satelliteCount }, () => {
+        const angle = rand(0, Math.PI * 2);
+        const dist = rand(r * 1.6, r * 5.5);
+        return {
+          dx: Math.cos(angle) * dist,
+          dy: Math.sin(angle) * dist * 0.7, // slightly flattened, splatter reads more horizontal
+          r: Math.max(0.8, r * rand(0.15, 0.4)) * (1 - dist / (r * 7))
+        };
+      });
+      const drips = Array.from({ length: Math.floor(rand(1, 3)) }, () => ({
+        dx: rand(-r * 0.4, r * 0.4),
+        growSpeed: rand(0.01, 0.025) * devicePixelRatio,
+        maxLen: rand(30, 90) * devicePixelRatio,
+        wobble: rand(1, 3)
+      }));
+
+      slot.active = true;
+      slot.x = rand(r * 6, W - r * 6);
+      slot.y = rand(H * 0.05, H * 0.75);
+      slot.r = r;
+      slot.satellites = satellites;
+      slot.drips = drips;
+      slot.baseAlpha = rand(0.35, 0.55);
+      slot.born = now;
+      slot.life = rand(7000, 13000);
+    }
+
+    function drawBlob(x, y, r, alpha){
+      const grad = dx.createRadialGradient(x - r * 0.3, y - r * 0.3, 0, x, y, r);
+      grad.addColorStop(0, `rgba(200,20,40,${alpha})`);
+      grad.addColorStop(0.55, `rgba(139,0,0,${alpha})`);
+      grad.addColorStop(1, `rgba(90,0,0,${alpha * 0.85})`);
+      dx.fillStyle = grad;
+      dx.beginPath();
+      dx.arc(x, y, r, 0, Math.PI * 2);
+      dx.fill();
+    }
+
+    function frame(now){
+      dx.clearRect(0, 0, W, H);
+
+      slots.forEach(slot => {
+        if (!slot.active){
+          if (!reduceMotionDrips && now >= slot.nextSpawn) spawn(slot, now);
+          return;
+        }
+
+        const age = now - slot.born;
+        if (age > slot.life){
+          slot.active = false;
+          slot.nextSpawn = now + rand(1500, 5000);
+          return;
+        }
+
+        const fadeIn = Math.min(1, age / 250);
+        const fadeOutStart = slot.life - 2200;
+        const fadeOut = age > fadeOutStart ? Math.max(0, 1 - (age - fadeOutStart) / 2200) : 1;
+        const alpha = slot.baseAlpha * fadeIn * fadeOut;
+        if (alpha <= 0.01) return;
+
+        // main splat blob + satellite droplets
+        drawBlob(slot.x, slot.y, slot.r, alpha);
+        slot.satellites.forEach(s => drawBlob(slot.x + s.dx, slot.y + s.dy, s.r, alpha * 0.9));
+
+        // drip strands running down from the blob
+        slot.drips.forEach(d => {
+          const len = Math.min(d.maxLen, age * d.growSpeed);
+          if (len < 2) return;
+          const startX = slot.x + d.dx;
+          const startY = slot.y + slot.r * 0.5;
+          const endX = startX + Math.sin(age * 0.0006) * d.wobble;
+          const endY = startY + len;
+          const grad = dx.createLinearGradient(startX, startY, endX, endY);
+          grad.addColorStop(0, `rgba(139,0,0,${alpha})`);
+          grad.addColorStop(1, `rgba(139,0,0,0)`);
+          dx.strokeStyle = grad;
+          dx.lineWidth = Math.max(1, slot.r * 0.35);
+          dx.lineCap = 'round';
+          dx.beginPath();
+          dx.moveTo(startX, startY);
+          dx.lineTo(endX, endY);
+          dx.stroke();
+        });
+      });
+
+      if (!reduceMotionDrips) requestAnimationFrame(frame);
+    }
+
+    resize();
+    makeSlots();
+    window.addEventListener('resize', () => { resize(); makeSlots(); });
+    if (reduceMotionDrips){
+      // static, gentle scene for reduced motion: a couple of settled splats, no animation loop
+      const now = 0;
+      slots.forEach(s => { spawn(s, now); s.born = -9999; });
+      frame(0);
+    } else {
+      requestAnimationFrame(frame);
+    }
+  })();
+</script>
+
+</body>
+</html>
